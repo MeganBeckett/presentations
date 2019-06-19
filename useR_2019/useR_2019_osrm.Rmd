@@ -1,0 +1,64 @@
+---
+title: "Spatial Optimisation"
+subtitle: "with OSRM and R"
+author: "Megan Beckett"
+institute: "Exegetic Analytics"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, ninjutsu, exegetic, exegetic-fonts]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, center, middle
+
+# What can I see in Toulouse?
+## Within different time intervals?
+## With my running shoes on?
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE,  message=FALSE, fig.retina = 3)
+```
+
+---
+class: inverse, center, middle
+
+---
+## Building OSRM
+
+```{bash}
+#!/bin/bash
+
+# First make sure that you have the necessary infrastructure and libraries required to build OSRM
+sudo apt update
+sudo apt install -y git \
+                    cmake \
+                    build-essential \
+                    jq \
+                    liblua5.2-dev \
+                    libboost-all-dev \
+                    libprotobuf-dev \
+                    libtbb-dev \
+                    libstxxl-dev \
+                    libbz2-dev
+
+# Grab the source directly from the repository on GitHub.
+git clone https://github.com/Project-OSRM/osrm-backend.git
+
+# Create a build folder and then run cmake to generate Makefiles.
+cd osrm-backend/
+mkdir build
+cd build/
+cmake ..
+
+# Next initiate the build. Time to kick back and wait: this will take some time!
+make
+
+# When the build completes, make the install target.
+sudo make install
+```
+
+---
