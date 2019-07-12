@@ -2,7 +2,7 @@
 
 ## Spatial Optimization with OSRM and R
 
-![]("https://github.com/MeganBeckett/presentations/blob/master/useR_2019/figs/running_time.png")
+![]("useR_2019/figs/running_time.png")
 
 I wanted to find out what I could see from my Airbnb, within certain time intervals, with my running shoes on.
 
