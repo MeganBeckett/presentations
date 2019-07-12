@@ -1,6 +1,6 @@
 # useR2019
 
-## Spatial Optimization with OSRM and R
+## :zap: Spatial Optimization with OSRM and R
 
 ![](/useR_2019/figs/running_time.png)
 
