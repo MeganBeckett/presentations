@@ -1,0 +1,381 @@
+---
+title: "Running in Circles"
+subtitle: "Spatial Optimisation with OSRM and R"
+author: "Megan Beckett"
+institute: "Exegetic Analytics"
+date: "satRday 2020"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, ninjutsu, exegetic, exegetic-fonts]
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, center, middle
+
+# 3 (relevant) things:
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,  message = FALSE, fig.retina = 3)
+
+```
+
+---
+class: inverse, center, middle
+
+# 3 (relevant) things:
+## I like green spaces
+---
+class: inverse, center, middle
+
+# 3 (relevant) things:
+## I like green spaces
+## I like R
+
+---
+class: inverse, center, middle
+
+# 3 (relevant) things:
+## I like green spaces
+## I like R
+## I like running
+
+
+---
+class: center, middle
+
+<center><img src="figs/joburg_satelite.png" style="box-shadow: 10px 10px 5px grey;"></center>
+---
+class: center, middle
+
+![](figs/osrm_logo.svg)
+---
+class: center, middle
+
+<center><img src="figs/example1.png" style="box-shadow: 10px 10px 5px grey;"></center>
+
+---
+class: center, middle
+
+<center><img src="figs/example2.png" style="box-shadow: 10px 10px 5px grey;"></center>
+
+---
+class: center, middle
+
+<center><img src="figs/example3.png" style="box-shadow: 10px 10px 5px grey;"></center>
+
+---
+class: center, middle
+
+<center><img src="figs/example4.png" style="box-shadow: 10px 10px 5px grey;"></center>
+
+---
+## Building OSRM
+.left-column[
+![](figs/osrm_build.png)
+]
+.right-column[
+```{bash eval = FALSE}
+# Necessary infrastructure. 
+sudo apt update
+sudo apt install -y git cmake build-essential jq htop \
+                    liblua5.2-dev libboost-all-dev \
+                    libprotobuf-dev libtbb-dev \
+                    libstxxl-dev libbz2-dev
+
+# Grab the source on GitHub.
+git clone https://github.com/Project-OSRM/osrm-backend.git
+
+# Create a build folder and then run cmake.
+cd osrm-backend/
+mkdir build
+cd build/
+cmake ..
+
+# Next initiate the build. 
+# This will take some time - grab a cup of coffee!
+make
+
+# When the build completes, 
+# make the install target for OSRM.
+sudo make install
+```
+]
+
+---
+## Getting the data - **www.openstreetmap.org**
+<center><img src="figs/osm_joburg.png" style="box-shadow: 10px 10px 5px grey; width:94%;"></center>
+
+---
+## Getting the data - **www.openstreetmap.org**
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<center><img src="figs/osm_limit.png" style="box-shadow: 10px 10px 5px grey; width:90%;"></center>
+
+---
+## Getting the data - **www.openstreetmap.org**
+<center><img src="figs/geofabrik_sa.png" style="box-shadow: 10px 10px 5px grey; width:94%;"></center>
+
+---
+## Preparing the data
+.pull-left[
+### Extract the map
+- car
+- bike
+- foot
+
+```{bash eval=FALSE}
+osrm-extract map.xml -p profiles/foot.lua
+```
+]
+.pull-right[
+![](figs/profiles.png)
+]
+---
+## Preparing the data
+.pull-left[
+### Extract the map
+- car
+- bike
+- foot
+
+```{bash eval=FALSE}
+osrm-extract map.xml -p profiles/foot.lua
+```
+
+### Create the hierarchy
+
+```{bash eval=FALSE}
+osrm-contract map.xml.osrm
+```
+]
+.pull-right[
+![](figs/profiles.png)
+]
+---
+## Preparing the data
+.pull-left[
+### Extract the map
+- car
+- bike
+- foot
+
+```{bash eval=FALSE}
+osrm-extract map.xml -p profiles/foot.lua
+```
+
+### Create the hierarchy
+
+```{bash eval=FALSE}
+osrm-contract map.xml.osrm
+```
+<br>
+<br>
+## Launch the service
+
+```{bash eval=FALSE}
+osrm-routed map.xml.osrm
+```
+]
+.pull-right[
+![](figs/profiles.png)
+]
+
+---
+## How long and far to walk from here to the nearest park?
+<center><img src="figs/innesfree_park.jpg" style="box-shadow: 10px 10px 5px grey; width:70%;"></center>
+
+---
+## How long and far to walk from here to the nearest park?
+
+<center><img src="figs/innesfree_park.jpg" style="box-shadow: 10px 10px 5px grey; width:70%;"></center>
+
+---
+## How long and far to walk from here to the nearest park?
+
+```{bash eval=FALSE}
+curl "http://127.0.0.1:5000/route/v1/walking/28.053241,-26.113230;28.073497,-26.105388" | jq
+```
+
+
+```{r eval=FALSE}
+{
+  "code": "Ok",
+  "waypoints": [
+    {
+      "hint": "9lAqgBf7LYArAAAAlQAAALwBAABWAQAAPxLCQHeHpEGs9nZCSEgAfw88ZVXO",
+      "distance": 2.634498,
+      "location": [
+        28.053251,
+        -26.113252
+      ],
+      "name": "Discovery Place"  #<<
+    },
+    {
+      "hint": "eNMGgITTBoBfBQAAZAEAAAAAAABIDAAA99A-Q8MARUIAAAAAWBPaQ1",
+      "distance": 0.447755,
+      "location": [
+        28.0735,
+        -26.105385
+      ],
+      "name": "Grayston Drive"  #<<
+    }
+  ],
+```
+---
+## How long and far to walk from here to the nearest park?
+
+```{bash eval=FALSE}
+  "routes": [
+    {
+      "legs": [
+        {
+          "steps": [],
+          "weight": 1997.1,
+          "distance": 2756.8,
+          "summary": "",
+          "duration": 1997.1
+        }
+      ],
+      "weight_name": "duration",
+      "geometry": "xfk~CycfjD_EeNuO}OcCoEoNme@]}@WJ_JiXgAOWiBOMqCVw@UcAbCj@{Bv@_BtMuN",
+      "weight": 1997.1,
+      "distance": 2756.8, #<<
+      "duration": 1997.1  #<<
+    }
+  ]
+}
+
+
+```
+
+- The `duration` is in seconds.
+- The `distance` is in metres. 
+
+---
+## The osrm R package
+
+.pull-left[
+```{r eval=FALSE}
+install.packages('osrm')
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+library(leaflet)
+leaflet() %>% 
+  setView(lng = 28.045374, lat = -26.100931, zoom = 13) %>% 
+  addTiles() %>%
+  addMarkers(lng = 28.045374, lat = -26.100931, popup = "Our Bnb")
+```
+]
+---
+## The osrm R package
+
+.pull-left[
+```{r eval=FALSE}
+install.packages('osrm')
+```
+<br>
+
+### Two important questions:
+<br>
+
+**1. What's the *optimal route* to visit the parks in the surrounding area?**
+
+<br>
+**2. What can I possibly see within certain *time intervals?***
+]
+
+.pull-right[
+```{r echo=FALSE}
+library(leaflet)
+leaflet() %>% 
+  setView(lng = 28.045374, lat = -26.100931, zoom = 13) %>% 
+  addTiles() %>%
+  addMarkers(lng = 28.045374, lat = -26.100931, popup = "Our Bnb")
+```
+]
+
+---
+## The osrm R package
+
+.pull-left[
+```{r eval=FALSE}
+install.packages('osrm')
+```
+<br>
+
+### With my running shoes on!
+<br>
+
+.center[![](figs/running.png)]
+]
+
+.pull-right[
+```{r echo=FALSE}
+library(leaflet)
+leaflet() %>% 
+  setView(lng = 28.045374, lat = -26.100931, zoom = 13) %>% 
+  addTiles() %>%
+  addMarkers(lng = 28.045374, lat = -26.100931, popup = "Our Bnb")
+```
+]
+
+---
+## 1. What's the optimal route?
+
+.left-column[
+![](figs/osrm_isochrones.png)
+]
+.right-column[
+```{r eval=FALSE}
+# Libraries
+library(osrm)
+library(leaflet)
+library(dplyr)
+
+# Point to osrm server
+options(osrm.server = "http://127.0.0.1:5000/")
+ 
+# Set location
+loc <- c(1.42, 43.59)
+
+# Generate isochrones at time intervals
+iso <- osrmIsochrone(loc, 
+                     breaks = seq(from = 0, to = 30, by = 5), 
+                     res = 400)
+
+# Plot with Leaflet
+leaflet(data = iso) %>% 
+  setView(lng = 1.42, lat = 43.59, zoom = 13) %>%
+  addTiles() %>% 
+  addMarkers(lng = 1.42, lat = 43.59, popup = "My Airbnb") %>%
+  addPolygons()
+```
+]
+
+---
+class: center, middle
+<center><img src="figs/isochrones.png" style="box-shadow: 10px 10px 5px grey; width:98%"></center>
+---
+class: center, middle
+
+background-image: url("figs/background.png")
+
+## So, who's coming at 6am tomorrow?!
+
+## **@mbeckett_za**
+## **megan@exegetic.biz**

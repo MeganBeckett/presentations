@@ -1,0 +1,83 @@
+---
+title: 'satRday2020: Spatial optimisation with OSRM and R'
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '2'
+  html_notebook:
+    number_sections: no
+    theme: lumen
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      toc_collapsed: yes
+---
+
+## Set up
+
+Connect to the OSRM server that you have running.
+
+In this instance, I downloaded, extracted and created the hierarchichal data for **Johannesburg** using a custom *running* profile that I created (this was a modification of the default foot profile with adjusted speeds).
+
+Instructions for building and running a local osrm instance are [here](https://datawookie.netlify.com/blog/2017/09/building-a-local-osrm-instance/).
+
+```{r}
+# LIBRARIES
+library(osrm)
+library(leaflet)
+library(tidyverse)
+
+# OSRM SERVER
+ options(osrm.server = "http://127.0.0.1:5000/")
+```
+
+## 1. Optimal route
+
+**What's the *optimal route* to visit the parks in the surrounding area?**
+
+My version of a "Travelling salesman problem", here we are going to find the optimal route between the parks in the surrounding area of my BnB I am staying at in Joburg for satRday. We are going to be using a running profile to get estimated running times.
+
+
+## 2. Running isochrones
+
+**What can I possibly see within certain *time intervals?***
+
+We are going to be generating a series of isochrones with different running time intervals to see what area I could cover in a specific time frame.
+
+*isochrone* = a line connecting points relating to the same travel time.
+
+```{r}
+# LOCATION
+loc <- c(1.428678, 43.598139)
+
+```
+
+```{r}
+iso <- osrmIsochrone(loc, breaks = seq(from = 0, to = 30, by = 5), res = 400)
+```
+
+```{r}
+# PLOT WITH LEAFLET
+# Create factor for colour scale
+iso@data$run_times <- factor(paste(iso@data$min, "to", iso@data$max, "min"),
+                              levels = c("0 to 5 min", "5 to 10 min", "10 to 15 min", "15 to 20 min", "20 to 25 min", "25 to 30 min"))
+
+# Colour palette for each area
+factpal <- colorFactor(rev(heat.colors(6)), iso@data$run_times)
+
+leaflet(data = iso) %>% 
+  setView(lng = 1.428678, lat = 43.598139, zoom = 13) %>%
+  addTiles() %>% 
+  addMarkers(lng = 1.428678, lat = 43.598139, popup = "My Airbnb") %>%
+  addPolygons(fill=TRUE, stroke=TRUE, color = "black",
+                                        fillColor = ~factpal(iso@data$run_times),
+                                        weight=0.5, fillOpacity=0.3,
+                                        data = iso, popup = iso@data$run_times,
+                                        group = "Running Time") %>% 
+                # Legend
+                addLegend("bottomright", pal = factpal, values = iso@data$run_times,   title = "Running Time")
+
+  
+```
+
