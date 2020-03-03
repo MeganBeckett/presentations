@@ -9,6 +9,7 @@ output:
     lib_dir: libs
     css: [default, ninjutsu, exegetic, exegetic-fonts]
     nature:
+      autoplay: 20000
       ratio: "16:9"
       highlightStyle: github
       highlightLines: true
