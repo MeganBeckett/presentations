@@ -15,15 +15,45 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE,  message = FALSE, fig.retina = 3)
 ```
 
-This notebook is in support of my presentation at [satRday 2020 Johannesburg](https://joburg2020.satrdays.org/). Slides are available [here]().
+This notebook is in support of my presentation, **"Running in Circles"** at [satRday 2020 Johannesburg](https://joburg2020.satrdays.org/). Slides are available [here]().
+
+Three (relevant) things about me:
+
+- I like green spaces
+- I like R
+- I like to run
+
+<center><img src="figs/joburg_satelite.png" style="box-shadow: 10px 10px 5px grey;"></center>
+
+This notebook focuses on two functions in the `{osrm}` package, namely:
+
+- `osrmTrip()` - Get the travel geometry between multiple unordered points.
+- `osrmIsochrone()` - Get polygons of isochrones.
+
+The other main functions in the R package are:
+
+- `osrmTable()` - Get travel time matrices between points.
+- `osrmRoute()` - Get the shortest path between two points.
+
+Each of the functions acts as an interface to build and send an OSRM API query to the specific OSRM services.
+
+<center><img src="figs/osrm_logo.svg"></center>
 
 ## Set up
 
-Connect to the OSRM server that you have running locally. 
-
 Instructions for building and running a local osrm instance are [here](https://datawookie.netlify.com/blog/2017/09/building-a-local-osrm-instance/).
 
-In this instance, I downloaded, extracted and created the hierarchichal data for **Johannesburg** using a custom *running* profile that I created. This was a modification of the default `foot.lua` profile by adjusting the speeds and setting the average "walking speed" to 5 minues/km.
+Connect to the OSRM server that you have running locally. 
+
+In this example, I downloaded, extracted and created the hierarchichal data for **Johannesburg, South Africa** using a custom *running* profile that I created. This was a modification of the default `foot.lua` profile provided by OSRM. The key adjustment was the average "walking speed", which I changed to to 5 minutes/km (or 12 km/hour).
+
+The profile that you use to extract and create the OSRM data is very important, depending on your use case. The defualt profiles provided are:
+
+- foot
+- car
+- bicycle
+
+Each profile (coded in the `Lua` language) provides specifications and constraints typical of the mode of transport, including average speeds and which roads, paths or tracks are allowed as part of a route.
 
 
 ```{r echo = FALSE}
@@ -36,23 +66,31 @@ library(tidyverse)
  options(osrm.server = "http://127.0.0.1:5000/")
 ```
 
+
+Next, we will investigate two key questions with our OSRM set up.
+
 ## 1. Optimal route
 
 **What's the *optimal route* to visit the parks in the surrounding area?**
 
-My version of a "Travelling salesman problem", here we are going to find the optimal route between the parks in the surrounding area of my BnB I am staying at in Joburg for satRday. We are going to be using a running profile to get estimated running times.
+My version of a "Travelling salesman problem", here we are going to find the optimal route between the parks in the surrounding area of my BnB I am staying at in Joburg for satRday. We are going to be using a running profile to get estimated running distances and times for the round trip.
 
 ### Get the locations
 ```{r}
 # LOCATIONS
 # Create a dataframe of locations of the parks
-locs <- data.frame(id = c("bnb", "innesfree_park", "james_ethel_park", "jhb_botanical_gardens", "zoo_lake_park", "delta_park", "riverside_park", "george_lea_park", "victoria_park"),
-                   lon = c(28.045374, 28.075012, 28.062958, 27.998316, 28.032836, 28.009244, 28.022098, 28.034806, 28.010344),
-                   lat = c(-26.100931, -26.104533, -26.137748, -26.159879, -26.161458, -26.125630, -26.101475, -26.099673, -26.137917)
+# These are unordered - OSRM will determine the optimal order for the shortest route
+locs <- data.frame(id = c("bnb", "james_ethel_park", "jhb_botanical_gardens", "innesfree_park",
+                          "zoo_lake_park", "delta_park", "riverside_park", "george_lea_park", "victoria_park"),
+                   lon = c(28.045374, 28.062958, 27.998316, 28.075012,
+                           28.032836, 28.009244, 28.022098, 28.034806, 28.010344),
+                   lat = c(-26.100931, -26.137748, -26.159879, -26.104533, 
+                           -26.161458, -26.125630, -26.101475, -26.099673, -26.137917)
                    )
 ```
 
 ### Calculate the optimal trip
+
 ```{r}
 # TRIP
 # Calculate the shortest round trip between the park locations
@@ -60,6 +98,7 @@ trip <- osrmTrip(locs)
 ```
 
 ### Visualise
+
 ```{r}
 # Get the spatial lines dataframe 
 trip_sp <- trip[[1]]$trip
@@ -100,6 +139,7 @@ Instead of a round trip, we are going to use one central location and generate a
 *isochrone* = a line connecting points relating to the same travel time.
 
 ### Set location
+
 ```{r}
 # LOCATION
 # The central location point that will be used to calculate the isochrones
@@ -107,6 +147,7 @@ loc <- c(28.045374, -26.100931)
 ```
 
 ### Generate the isochrones
+
 ```{r echo = FALSE}
 # ISOCHRONE
 # Create series of isochrones in 5 minute increments
@@ -116,6 +157,7 @@ iso <- osrmIsochrone(loc, breaks = seq(from = 0, to = 30, by = 5), res = 300)
 **Note:** The `res` argument is the number of points used to compute the isochrones. It is one side of the square grid, so the total number of points will be res*res. The default is 30 but I normally increase to get more detailed isochrones. The higher the number the longer the computation time as well. You normmaly need to experiment with this and find the optimal number for your use case.
 
 ### Visualise
+
 ```{r}
 # PLOT WITH LEAFLET
 # Create factor for colour scale with labels for time intervals

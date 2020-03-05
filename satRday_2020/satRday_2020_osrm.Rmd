@@ -350,26 +350,65 @@ library(dplyr)
 # Point to osrm server
 options(osrm.server = "http://127.0.0.1:5000/")
  
+# Create dataframe of (unordered points)
+locs <- data.frame(id = c("bnb", "james_ethel_park", "jhb_botanical_gardens", ...),
+                   lon = c(28.045374, 28.062958, 27.998316, ...),
+                   lat = c(-26.100931, -26.137748, -26.159879, ...)
+                   )
+
+# Calculate the shortest round trip 
+trip <- osrmTrip(locs) #<<
+
+# Plot with Leaflet
+leaflet(data = trip[[1]]$trip) %>% 
+  addTiles() %>% 
+  addMarker() %>%
+  addPolylines() #<<
+```
+]
+
+**Notebook** -> [bit.ly/satrday-osrm]()
+---
+
+---
+## 2. What can I see within certain time intervals?
+
+.left-column[
+![](figs/osrm_isochrones.png)
+]
+.right-column[
+```{r eval=FALSE}
+# Libraries
+library(osrm)
+library(leaflet)
+library(dplyr)
+
+# Point to osrm server
+options(osrm.server = "http://127.0.0.1:5000/")
+ 
 # Set location
-loc <- c(1.42, 43.59)
+loc <- c(28.045374, -26.100931)
 
 # Generate isochrones at time intervals
-iso <- osrmIsochrone(loc, 
-                     breaks = seq(from = 0, to = 30, by = 5), 
-                     res = 400)
+iso <- osrmIsochrone(loc, #<<
+                     breaks = seq(from = 0, to = 30, by = 5), #<<
+                     res = 300) #<<
 
 # Plot with Leaflet
 leaflet(data = iso) %>% 
-  setView(lng = 1.42, lat = 43.59, zoom = 13) %>%
   addTiles() %>% 
-  addMarkers(lng = 1.42, lat = 43.59, popup = "My Airbnb") %>%
-  addPolygons()
+  addMarkers() %>%
+  addPolygons() #<<
 ```
+
+**Notebook** -> [bit.ly/satrday-osrm]()
 ]
 
 ---
 class: center, middle
 <center><img src="figs/isochrones.png" style="box-shadow: 10px 10px 5px grey; width:98%"></center>
+---
+
 ---
 class: center, middle
 
@@ -379,3 +418,6 @@ background-image: url("figs/background.png")
 
 ## **@mbeckett_za**
 ## **megan@exegetic.biz**
+
+
+### **Notebook** -> [bit.ly/satrday-osrm]()
