@@ -3,6 +3,7 @@ title: 'satRday2020: Spatial optimisation with OSRM and R'
 output:
   html_document:
     number_sections: no
+    code_folding: show
     theme: lumen
     toc: yes
     toc_depth: 2
@@ -12,10 +13,14 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE,  message = FALSE, fig.retina = 3)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,  message = FALSE, fig.retina = 3)
 ```
 
-This notebook is in support of my presentation, **"Running in Circles"** at [satRday 2020 Johannesburg](https://joburg2020.satrdays.org/). Slides are available [here]().
+*This notebook is in support of my presentation, **"Running in Circles"** at [satRday 2020 Johannesburg](https://joburg2020.satrdays.org/). Slides are available [here](https://github.com/MeganBeckett/presentations/tree/master/satRday_2020).*
+
+> Visiting a new place on holiday or travelling for work? What can you see from where you’re staying? What are the shortest routes? To answer these questions, you’d probably ordinarily reach for your phone and open up Google Maps. However, as a data scientist, with a specific set constraints and conditions (including having my running shoes on), I want to delve a bit deeper, explore and map out my options. My first tool to reach for is R. Then, the Open Source Routing Machine (OSRM).
+>
+> OSRM is a high-performance routing engine for calculating the shortest paths through a road network. These calculations are available via Google Maps. However, queries against a local OSRM server are orders of magnitude faster than Google Maps (and cheaper!). The osrm package for R exposes these routing data to a wide range of potential applications. 
 
 Three (relevant) things about me:
 
@@ -23,7 +28,13 @@ Three (relevant) things about me:
 - I like R
 - I like to run
 
+As satRday 2020 is in Jozi, here is a Google satellite image of the city that we are going to be exploring:
+
+<br>
 <center><img src="figs/joburg_satelite.png" style="box-shadow: 10px 10px 5px grey;"></center>
+
+<br>
+<br>
 
 This notebook focuses on two functions in the `{osrm}` package, namely:
 
@@ -81,7 +92,8 @@ My version of a "Travelling salesman problem", here we are going to find the opt
 # Create a dataframe of locations of the parks
 # These are unordered - OSRM will determine the optimal order for the shortest route
 locs <- data.frame(id = c("bnb", "james_ethel_park", "jhb_botanical_gardens", "innesfree_park",
-                          "zoo_lake_park", "delta_park", "riverside_park", "george_lea_park", "victoria_park"),
+                          "zoo_lake_park", "delta_park", "riverside_park", "george_lea_park",
+                          "victoria_park"),
                    lon = c(28.045374, 28.062958, 27.998316, 28.075012,
                            28.032836, 28.009244, 28.022098, 28.034806, 28.010344),
                    lat = c(-26.100931, -26.137748, -26.159879, -26.104533, 
@@ -99,7 +111,7 @@ trip <- osrmTrip(locs)
 
 ### Visualise
 
-```{r}
+```{r fig.width = 9, fig.height = 8}
 # Get the spatial lines dataframe 
 trip_sp <- trip[[1]]$trip
 
@@ -148,7 +160,7 @@ loc <- c(28.045374, -26.100931)
 
 ### Generate the isochrones
 
-```{r echo = FALSE}
+```{r cache = TRUE}
 # ISOCHRONE
 # Create series of isochrones in 5 minute increments
 iso <- osrmIsochrone(loc, breaks = seq(from = 0, to = 30, by = 5), res = 300)
@@ -158,11 +170,12 @@ iso <- osrmIsochrone(loc, breaks = seq(from = 0, to = 30, by = 5), res = 300)
 
 ### Visualise
 
-```{r}
+```{r fig.width = 9, fig.height = 8}
 # PLOT WITH LEAFLET
 # Create factor for colour scale with labels for time intervals
 iso@data$run_times <- factor(paste(iso@data$min, "to", iso@data$max, "min"),
-                              levels = c("0 to 5 min", "5 to 10 min", "10 to 15 min", "15 to 20 min", "20 to 25 min", "25 to 30 min"))
+                              levels = c("0 to 5 min", "5 to 10 min", "10 to 15 min", 
+                                         "15 to 20 min", "20 to 25 min", "25 to 30 min"))
 
 # Colour palette for each area
 factpal <- colorFactor(rev(heat.colors(6)), iso@data$run_times)
@@ -178,7 +191,9 @@ leaflet(data = iso) %>%
                                         data = iso, popup = iso@data$run_times,
                                         group = "Running Time") %>% 
                 # Legend
-                addLegend("bottomright", pal = factpal, values = iso@data$run_times,   title = "Running Time")
+                addLegend("bottomright", pal = factpal, 
+                          values = iso@data$run_times,
+                          title = "Running Time")
   
 ```
 

@@ -208,7 +208,7 @@ osrm-routed map.xml.osrm
 curl "http://127.0.0.1:5000/route/v1/walking/28.053241,-26.113230;28.073497,-26.105388" | jq
 ```
 
-
+--
 ```{r eval=FALSE}
 {
   "code": "Ok",
@@ -351,7 +351,7 @@ library(dplyr)
 options(osrm.server = "http://127.0.0.1:5000/")
  
 # Create dataframe of (unordered points)
-locs <- data.frame(id = c("bnb", "james_ethel_park", "jhb_botanical_gardens", ...),
+locs <- data.frame(id = c("bnb", "jhb_botanical_gardens", ...),
                    lon = c(28.045374, 28.062958, 27.998316, ...),
                    lat = c(-26.100931, -26.137748, -26.159879, ...)
                    )
@@ -365,10 +365,13 @@ leaflet(data = trip[[1]]$trip) %>%
   addMarker() %>%
   addPolylines() #<<
 ```
+<br>
+### **Notebook -** [bit.ly/satrday-osrm](http://bit.ly/satrday-osrm)
 ]
 
-**Notebook** -> [bit.ly/satrday-osrm]()
 ---
+class: center, middle
+<center><img src="figs/osrm_trip_joburg.png" style="box-shadow: 10px 10px 5px grey; width:95%"></center>
 
 ---
 ## 2. What can I see within certain time intervals?
@@ -400,24 +403,112 @@ leaflet(data = iso) %>%
   addMarkers() %>%
   addPolygons() #<<
 ```
-
-**Notebook** -> [bit.ly/satrday-osrm]()
+<br>
+### **Notebook -** [bit.ly/satrday-osrm](http://bit.ly/satrday-osrm)
 ]
 
 ---
 class: center, middle
-<center><img src="figs/isochrones.png" style="box-shadow: 10px 10px 5px grey; width:98%"></center>
----
 
+<center><img src="figs/osrm_iso_joburg.png" style="box-shadow: 10px 10px 5px grey; width:95%"></center>
+
+---
+class: center, middle
+
+<center><img src="figs/exegetic.png" style="width:60%"></center>
+
+---
+## Application: Delivery area compromise
+
+.pull-left[
+
+<br>
+- A store **location**
+]
+
+.pull-right[
+<center><img src="figs/store_1.png" style="box-shadow: 10px 10px 5px grey;"></center>
+]
+---
+## Application: Delivery area compromise
+
+.pull-left[
+
+<br>
+- A store location
+
+- A delivery area of max **8 min** - *isochrone*
+]
+
+.pull-right[
+<center><img src="figs/store_2.png" style="box-shadow: 10px 10px 5px grey;"></center>
+]
+---
+## Application: Delivery area compromise
+
+.pull-left[
+
+<br>
+- A store location
+
+- A delivery area of max 8 min - *isochrone*
+
+- A delivery area of max **2.5 km** - *isodistance*
+]
+
+.pull-right[
+<center><img src="figs/store_3.png" style="box-shadow: 10px 10px 5px grey;"></center>
+]
+
+---
+## Application: Delivery area compromise
+
+.pull-left[
+
+<br>
+- A store location
+
+- A delivery area of max 8 min - *isochrone*
+
+- A delivery area of max 2.5 km - *isodistance*
+
+- An **intersection**
+]
+
+.pull-right[
+<center><img src="figs/store_4.png" style="box-shadow: 10px 10px 5px grey;"></center>
+]
+
+---
+## Application: Delivery area compromise
+
+.pull-left[
+
+<br>
+- A store location
+
+- A delivery area of max 8 min - *isochrone*
+
+- A delivery area of max 2.5 km - *isodistance*
+
+- An intersection
+
+- Everyone is **happy**!
+]
+
+.pull-right[
+<center><img src="figs/store_5.png" style="box-shadow: 10px 10px 5px grey;"></center>
+]
 ---
 class: center, middle
 
 background-image: url("figs/background.png")
 
-## So, who's coming at 6am tomorrow?!
+## So, who's coming for a run at 6am tomorrow?!
 
+<br>
 ## **@mbeckett_za**
 ## **megan@exegetic.biz**
 
-
-### **Notebook** -> [bit.ly/satrday-osrm]()
+<br>
+### **Notebook ->** [bit.ly/satrday-osrm](http://bit.ly/satrday-osrm)
