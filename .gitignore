@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 */libs
+*/rsconnect
+*.pdf
+*_cache/
