@@ -199,7 +199,9 @@ osrm-routed map.xml.osrm
 ---
 ## How long and far to walk from here to the nearest park?
 
-<center><img src="figs/innesfree_park.jpg" style="box-shadow: 10px 10px 5px grey; width:70%;"></center>
+```{bash eval=FALSE}
+curl "http://127.0.0.1:5000/route/v1/walking/28.053241,-26.113230;28.073497,-26.105388" | jq
+```
 
 ---
 ## How long and far to walk from here to the nearest park?
@@ -208,7 +210,6 @@ osrm-routed map.xml.osrm
 curl "http://127.0.0.1:5000/route/v1/walking/28.053241,-26.113230;28.073497,-26.105388" | jq
 ```
 
---
 ```{r eval=FALSE}
 {
   "code": "Ok",
