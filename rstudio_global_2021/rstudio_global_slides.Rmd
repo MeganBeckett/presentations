@@ -1,0 +1,104 @@
+---
+title: "RStudio Global"
+author: "Megan Beckett"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r xaringan-themer, include=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#5AA5FC",        # blue
+  secondary_color = "#fcb058",      # orange
+  header_font_google = google_font("Asap Medium"),
+  text_font_google = google_font("Asap"),
+  header_h1_font_size = "3.5rem",
+  header_h2_font_size = "2.75rem"
+)
+
+style_xaringan(
+  colors = c(
+    white = "#FFFFFF"
+  )
+)
+```
+background-image: url("figs/lecture.jpg")
+background-size: cover
+
+???
+
+Image credit: [Unsplash](https://unsplash.com/photos/46M6QPE5MTY)
+
+---
+background-image: url("figs/lecture.jpg")
+background-size: cover
+class: center, middle
+
+<center><img src="figs/figure-17-02.jpg" style="box-shadow: 10px 10px 5px black;"></center>
+
+???
+
+Image credit: [CORE Economics Education](https://www.core-econ.org/)
+
+---
+background-image: url("figs/globe.jpg")
+background-size: cover
+class: center, middle
+
+???
+
+Image credit: [Unsplash](https://unsplash.com/photos/WZh1QZFB4kc)
+---
+background-image: url("figs/globe_circle.png")
+background-size: cover
+
+# .white[title title title title title]
+## .white[Megan Beckett]
+### .white[Data Scientist]
+
+???
+
+Image credit: [Unsplash](https://unsplash.com/photos/WZh1QZFB4kc)
+
+---
+background-image: url("figs/graphs.png")
+background-size: cover
+
+---
+background-image: url("figs/graphs_faded.png")
+background-size: cover
+class: center, middle
+
+# "Can you automate this?"
+---
+# Step 1: Automation
+
+---
+background-image: url("figs/graphs_faded.png")
+background-size: cover
+class: center, middle
+
+# "Mmm, can you make them look as good?"
+
+---
+# Step 2: Beautification
+
+---
+background-image: url("figs/graphs_faded.png")
+background-size: cover
+class: center, middle
+
+# "Ok, can you do this in all languages?"
+
+---
+# Step 3: Translation
