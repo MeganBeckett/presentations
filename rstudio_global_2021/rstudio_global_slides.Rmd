@@ -11,30 +11,30 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-```
+background-image: url("figs/lecture.jpg")
+background-size: cover
 
 ```{r xaringan-themer, include=FALSE}
 library(xaringanthemer)
 style_duo_accent(
-  primary_color = "#5AA5FC",        # blue
-  secondary_color = "#fcb058",      # orange
+  primary_color = "#424242",        # blue
+  secondary_color = "#fe7642",      # orange
   header_font_google = google_font("Asap Medium"),
   text_font_google = google_font("Asap"),
-  header_h1_font_size = "3.5rem",
-  header_h2_font_size = "2.75rem"
-)
-
-style_xaringan(
-  colors = c(
-    white = "#FFFFFF"
-  )
+  header_h1_font_size = "2.5rem",
+  header_h2_font_size = "2rem"
 )
 ```
-background-image: url("figs/lecture.jpg")
-background-size: cover
 
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{css echo=FALSE}
+.remark-slide-number {
+  display: none;
+}
+```
 ???
 
 Image credit: [Unsplash](https://unsplash.com/photos/46M6QPE5MTY)
@@ -80,8 +80,16 @@ background-size: cover
 class: center, middle
 
 # "Can you automate this?"
+
 ---
 # Step 1: Automation
+
+<img src="figs/workflow_4.png" style="width:100%">
+
+---
+# Step 1: Automation
+
+<img src="figs/workflow_3.png" style="width:100%">
 
 ---
 background-image: url("figs/graphs_faded.png")
@@ -91,7 +99,42 @@ class: center, middle
 # "Mmm, can you make them look as good?"
 
 ---
-# Step 2: Beautification
+# Step 2: Aesthetics
+<img src="figs/workflow_2.png" style="width:100%">
+
+---
+# 80% there with ggplot theme
+.left-column[
+<img src="figs/stylesheet.jpg" style="box-shadow: 10px 10px 5px grey; width:100%">
+]
+--
+.right-column[
+```{r eval=FALSE}
+theme_core <- function(...) {
+    theme_classic(
+      base_family = "Asap"
+    ) +
+    theme(
+      # Text 
+      axis.title = element_text(size = 20, family = "Asap Medium"),
+      # Line colours
+      axis.ticks = element_line(colour = "#464646"),
+      # Area colours
+      legend.background = element_rect(fill = alpha('white', 0.0)),
+      # Spacing and markdown
+      axis.title.x = ggtext::element_markdown(margin = margin(15))
+    ) +
+    theme(
+      ...
+    )
+}
+```
+
+]
+---
+# Original vs (aesthetically) automated
+---
+# Custom key glyphs 
 
 ---
 background-image: url("figs/graphs_faded.png")
@@ -102,3 +145,50 @@ class: center, middle
 
 ---
 # Step 3: Translation
+<img src="figs/workflow_1.png" style="width:100%">
+---
+# Different numbering systems
+
+---
+background-image: url("figs/toolshed.jpg")
+background-size: cover
+
+???
+
+Image credit: [Unsplash](https://unsplash.com/photos/qAHdDVN0gMQ)
+---
+background-image: url("figs/tools.png")
+background-size: cover
+
+???
+
+Image credit: [Unsplash](https://unsplash.com/photos/qAHdDVN0gMQ)
+
+---
+background-image: url("figs/tools_2.png")
+background-size: cover
+
+???
+
+Image credit: [Unsplash](https://unsplash.com/photos/qAHdDVN0gMQ)
+---
+background-image: url("figs/hands.jpg")
+background-size: cover
+
+???
+
+Image credit: [Unsplash](https://unsplash.com/photos/wKAKZV8Ewkk)
+
+---
+background-image: url("figs/lecture.jpg")
+background-size: cover
+class: center, middle
+
+---
+background-image: url("figs/globe.jpg")
+background-size: cover
+class: center
+
+# .white[Thank you!]
+### .white[@mbeckett_za]
+### .white[megan@exegetic.biz]
