@@ -132,10 +132,19 @@ theme_core <- function(...) {
 
 ]
 ---
-# Original vs (aesthetically) automated
----
 # Custom key glyphs 
 
+TODO
+
+- picture and code
+---
+
+# Original vs (aesthetically) automated
+
+TODO
+
+- pictures
+- how many?
 ---
 background-image: url("figs/graphs_faded.png")
 background-size: cover
@@ -148,6 +157,20 @@ class: center, middle
 <img src="figs/workflow_1.png" style="width:100%">
 ---
 # Different numbering systems
+
+<img src="figs/graphs_numbers.png" style="width:100%">
+---
+# Different numbering systems
+
+TODO
+
+- picture and code examples
+---
+background-image: url("figs/graphs_faded.png")
+background-size: cover
+class: center, middle
+
+# "Let's do this!"
 
 ---
 background-image: url("figs/toolshed.jpg")
@@ -171,13 +194,13 @@ background-size: cover
 ???
 
 Image credit: [Unsplash](https://unsplash.com/photos/qAHdDVN0gMQ)
----
-background-image: url("figs/hands.jpg")
-background-size: cover
+<!-- --- -->
+<!-- background-image: url("figs/hands.jpg") -->
+<!-- background-size: cover -->
 
-???
+<!-- ??? -->
 
-Image credit: [Unsplash](https://unsplash.com/photos/wKAKZV8Ewkk)
+<!-- Image credit: [Unsplash](https://unsplash.com/photos/wKAKZV8Ewkk) -->
 
 ---
 background-image: url("figs/lecture.jpg")
