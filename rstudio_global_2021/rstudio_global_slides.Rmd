@@ -51,6 +51,17 @@ class: center, middle
 Image credit: [CORE Economics Education](https://www.core-econ.org/)
 
 ---
+background-image: url("figs/lecture.jpg")
+background-size: cover
+class: center, middle
+
+<center><img src="figs/figure-17-02_arrow.png" style="box-shadow: 10px 10px 5px black;"></center>
+
+???
+
+Image credit: [CORE Economics Education](https://www.core-econ.org/)
+
+---
 background-image: url("figs/globe.jpg")
 background-size: cover
 class: center, middle
@@ -122,7 +133,7 @@ theme_core <- function(...) {
       # Area colours
       legend.background = element_rect(fill = alpha('white', 0.0)),
       # Spacing and markdown
-      axis.title.x = ggtext::element_markdown(margin = margin(15))
+      axis.title = ggtext::element_markdown(margin = margin(15))
     ) +
     theme(
       ...
@@ -156,15 +167,193 @@ class: center, middle
 # Step 3: Translation
 <img src="figs/workflow_1.png" style="width:100%">
 ---
+# YAML
+.pull-left[
+<img src="figs/yaml.png" style="box-shadow: 10px 10px 5px grey; width:100%">
+]
+.pull-right[
+
+### *Yet Another Markup Language*
+### *YAML Ain't Markup Language*
+]
+---
+# YAML
+.pull-left[
+<img src="figs/yaml.png" style="box-shadow: 10px 10px 5px grey; width:100%">
+]
+.pull-right[
+
+```{r eval = FALSE}
+library(yaml)
+
+# Translation strings
+strings <- read_yaml("file_name.yml")
+```
+]
+
+---
+# YAML
+.pull-left[
+<img src="figs/yaml.png" style="box-shadow: 10px 10px 5px grey; width:100%">
+]
+.pull-right[
+
+```{r eval = FALSE}
+library(yaml)
+
+# Translation strings
+strings <- read_yaml("file_name.yml")
+```
+
+```{r eval = FALSE}
+ggplot(data, aes(x = year, y = temp)) +
+  geom_line() +
+  labs(x = X_AXIS_LABEL,
+       y = Y_AXIS_LABEL)
+```
+]
+
+---
+# YAML
+.pull-left[
+<img src="figs/yaml.png" style="box-shadow: 10px 10px 5px grey; width:100%">
+]
+.pull-right[
+
+```{r eval = FALSE}
+library(yaml)
+
+# Translation strings
+strings <- read_yaml("file_name.yml")
+```
+
+```{r eval = FALSE}
+ggplot(data, 
+       aes(x = year, y = temp)) +
+  geom_line() +
+  labs(x = X_AXIS_LABEL,
+       y = Y_AXIS_LABEL)
+```
+
+```{r eval=FALSE}
+theme(axis.title = ggtext::element_markdown()) 
+```
+
+]
+
+---
+# YAML
+.pull-left[
+<img src="figs/yaml.png" style="box-shadow: 10px 10px 5px grey; width:100%">
+]
+.pull-right[
+
+```{r eval = FALSE}
+library(yaml)
+
+# Translation strings
+strings <- read_yaml("file_name.yml")
+```
+
+```{r eval = FALSE}
+ggplot(data, 
+       aes(x = year, y = temp)) +
+  geom_line() +
+  labs(x = X_AXIS_LABEL,
+       y = Y_AXIS_LABEL)
+```
+
+```{r eval=FALSE}
+theme(axis.title = ggtext::element_markdown()) 
+```
+
+```{r eval=FALSE}
+geom_text <- function(...) {
+  ggtext::geom_richtext(...)
+}
+```
+
+]
+
+---
 # Different numbering systems
 
 <img src="figs/graphs_numbers.png" style="width:100%">
 ---
 # Different numbering systems
 
-TODO
+.left-column[
 
-- picture and code examples
+]
+.right-column[
+
+#### A number formatting function per language
+```{r eval=FALSE}
+# English
+en <- function(x){
+  number_format(accuracy = decimal_accuracy(x),
+               scale = 1,
+               big.mark = ",",
+               decimal.mark = ".")(x)
+}
+```
+]
+---
+# Different numbering systems
+
+.left-column[
+
+]
+.right-column[
+
+#### A number formatting function per language
+```{r eval=FALSE}
+# English
+en <- function(x){
+  number_format(accuracy = decimal_accuracy(x),
+               scale = 1,
+               big.mark = ",",
+               decimal.mark = ".")(x)
+}
+```
+
+```{r eval=FALSE}
+# Finnish
+fi <- function(x){
+  number_format(accuracy = decimal_accuracy(x),
+                scale = 1,
+                big.mark = " ",
+                decimal.mark = ",")(x)
+}
+```
+
+]
+---
+# Different numbering systems
+
+.left-column[
+
+]
+.right-column[
+
+#### Function supplied to labels argument using `match.fun()`
+
+```{r eval = FALSE}
+for (LANG in LANGUAGES) {
+  
+  ...
+  
+   ggplot(data, 
+        aes(x = year, 
+            y = gdp)) +
+    scale_y_continuous(labels = match.fun(LANG)) +
+    scale_x_continuous(labels = match.fun(LANG))
+  
+}
+
+```
+
+]
 ---
 background-image: url("figs/graphs_faded.png")
 background-size: cover
@@ -194,19 +383,14 @@ background-size: cover
 ???
 
 Image credit: [Unsplash](https://unsplash.com/photos/qAHdDVN0gMQ)
-<!-- --- -->
-<!-- background-image: url("figs/hands.jpg") -->
-<!-- background-size: cover -->
-
-<!-- ??? -->
-
-<!-- Image credit: [Unsplash](https://unsplash.com/photos/wKAKZV8Ewkk) -->
-
 ---
-background-image: url("figs/lecture.jpg")
+background-image: url("figs/globe.jpg")
 background-size: cover
 class: center, middle
 
+???
+
+Image credit: [Unsplash](https://unsplash.com/photos/WZh1QZFB4kc)
 ---
 background-image: url("figs/globe.jpg")
 background-size: cover
