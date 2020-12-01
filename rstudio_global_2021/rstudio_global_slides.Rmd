@@ -143,19 +143,17 @@ theme_core <- function(...) {
 
 ]
 ---
-# Custom key glyphs 
+<center><img src="figs/comparison_1.png" style="width:100%"></center>
+### Spot the differences! See any? Tweet me *@mbeckett_za* 
 
-TODO
-
-- picture and code
 ---
+<center><img src="figs/comparison_2.png" style="width:100%"></center>
+### Spot the differences! See any? Tweet me *@mbeckett_za* 
 
-# Original vs (aesthetically) automated
+---
+<center><img src="figs/comparison_.png" style="width:100%"></center>
+### Spot the differences! See any? Tweet me *@mbeckett_za* 
 
-TODO
-
-- pictures
-- how many?
 ---
 background-image: url("figs/graphs_faded.png")
 background-size: cover
@@ -278,20 +276,36 @@ geom_text <- function(...) {
 ---
 # Different numbering systems
 
-<img src="figs/graphs_numbers.png" style="width:100%">
+<img src="figs/number-formatting_1.png" style="width:100%">
+
 ---
 # Different numbering systems
 
-.left-column[
+<img src="figs/number-formatting_2.png" style="width:100%">
 
+---
+# Different numbering systems
+
+<img src="figs/number-formatting_3.png" style="width:100%">
+
+---
+# Different numbering systems
+
+<img src="figs/number-formatting_4.png" style="width:100%">
+
+---
+# Different numbering systems
+
+.pull-left[
+<img src="figs/number-formatting_5.png" style="width:70%">
 ]
-.right-column[
+.pull-right[
 
-#### A number formatting function per language
+### A number formatting function per language
 ```{r eval=FALSE}
 # English
 en <- function(x){
-  number_format(accuracy = decimal_accuracy(x),
+  number_format(accuracy = decimal_acc(x),
                scale = 1,
                big.mark = ",",
                decimal.mark = ".")(x)
@@ -301,26 +315,17 @@ en <- function(x){
 ---
 # Different numbering systems
 
-.left-column[
-
+.pull-left[
+<img src="figs/number-formatting_6.png" style="width:70%">
 ]
-.right-column[
+.pull-right[
 
-#### A number formatting function per language
-```{r eval=FALSE}
-# English
-en <- function(x){
-  number_format(accuracy = decimal_accuracy(x),
-               scale = 1,
-               big.mark = ",",
-               decimal.mark = ".")(x)
-}
-```
+### A number formatting function per language
 
 ```{r eval=FALSE}
 # Finnish
 fi <- function(x){
-  number_format(accuracy = decimal_accuracy(x),
+  number_format(accuracy = decimal_acc(x),
                 scale = 1,
                 big.mark = " ",
                 decimal.mark = ",")(x)
@@ -331,12 +336,12 @@ fi <- function(x){
 ---
 # Different numbering systems
 
-.left-column[
-
+.pull-left[
+<img src="figs/number-formatting_8.png" style="width:70%">
 ]
-.right-column[
+.pull-right[
 
-#### Function supplied to labels argument using `match.fun()`
+### Function supplied to labels argument using `match.fun()`
 
 ```{r eval = FALSE}
 for (LANG in LANGUAGES) {
@@ -346,9 +351,9 @@ for (LANG in LANGUAGES) {
    ggplot(data, 
         aes(x = year, 
             y = gdp)) +
-    scale_y_continuous(labels = match.fun(LANG)) +
-    scale_x_continuous(labels = match.fun(LANG))
-  
+    scale_y_continuous(
+      labels = match.fun(LANG)
+      )
 }
 
 ```
@@ -399,3 +404,6 @@ class: center
 # .white[Thank you!]
 ### .white[@mbeckett_za]
 ### .white[megan@exegetic.biz]
+
+---
+# Custom key glyphs 
