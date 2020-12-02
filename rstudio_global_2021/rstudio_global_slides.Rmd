@@ -148,6 +148,9 @@ theme_core <- function(...) {
 
 ]
 ---
+<center><img src="figs/comparison_1a.png" style="width:100%"></center>
+
+---
 <center><img src="figs/comparison_1.png" style="width:100%"></center>
 ### Spot the differences! See any? Tweet me *@mbeckett_za* 
 
