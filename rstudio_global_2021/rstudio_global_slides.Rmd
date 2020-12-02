@@ -16,6 +16,8 @@ background-size: cover
 
 ```{r xaringan-themer, include=FALSE}
 library(xaringanthemer)
+library(fontawesome)
+
 style_duo_accent(
   primary_color = "#424242",        # blue
   secondary_color = "#fe7642",      # orange
@@ -101,7 +103,10 @@ class: center, middle
 # Step 1: Automation
 
 <img src="figs/workflow_3.png" style="width:100%">
+---
+# Step 1: Automation
 
+<img src="figs/workflow_5.png" style="width:100%">
 ---
 background-image: url("figs/graphs_faded.png")
 background-size: cover
@@ -151,7 +156,7 @@ theme_core <- function(...) {
 ### Spot the differences! See any? Tweet me *@mbeckett_za* 
 
 ---
-<center><img src="figs/comparison_.png" style="width:100%"></center>
+<center><img src="figs/comparison_3.png" style="width:100%"></center>
 ### Spot the differences! See any? Tweet me *@mbeckett_za* 
 
 ---
@@ -185,7 +190,29 @@ class: center, middle
 library(yaml)
 
 # Translation strings
+{{strings <- read_yaml("file_name.yml")}}
+```
+]
+
+---
+# YAML
+.pull-left[
+<img src="figs/yaml.png" style="box-shadow: 10px 10px 5px grey; width:100%">
+]
+.pull-right[
+
+```{r eval = FALSE}
+library(yaml)
+
+# Translation strings
 strings <- read_yaml("file_name.yml")
+```
+
+```{r eval = FALSE}
+ggplot(data, aes(x = year, y = temp)) +
+  geom_line() +
+  {{labs(x = X_AXIS_LABEL,}}
+       {{y = Y_AXIS_LABEL)}}
 ```
 ]
 
@@ -209,32 +236,9 @@ ggplot(data, aes(x = year, y = temp)) +
   labs(x = X_AXIS_LABEL,
        y = Y_AXIS_LABEL)
 ```
-]
-
----
-# YAML
-.pull-left[
-<img src="figs/yaml.png" style="box-shadow: 10px 10px 5px grey; width:100%">
-]
-.pull-right[
-
-```{r eval = FALSE}
-library(yaml)
-
-# Translation strings
-strings <- read_yaml("file_name.yml")
-```
-
-```{r eval = FALSE}
-ggplot(data, 
-       aes(x = year, y = temp)) +
-  geom_line() +
-  labs(x = X_AXIS_LABEL,
-       y = Y_AXIS_LABEL)
-```
 
 ```{r eval=FALSE}
-theme(axis.title = ggtext::element_markdown()) 
+{{theme(axis.title = ggtext::element_markdown())}}
 ```
 
 ]
@@ -254,8 +258,7 @@ strings <- read_yaml("file_name.yml")
 ```
 
 ```{r eval = FALSE}
-ggplot(data, 
-       aes(x = year, y = temp)) +
+ggplot(data, aes(x = year, y = temp)) +
   geom_line() +
   labs(x = X_AXIS_LABEL,
        y = Y_AXIS_LABEL)
@@ -267,7 +270,7 @@ theme(axis.title = ggtext::element_markdown())
 
 ```{r eval=FALSE}
 geom_text <- function(...) {
-  ggtext::geom_richtext(...)
+  {{ggtext::geom_richtext(...)}}
 }
 ```
 
@@ -306,9 +309,9 @@ geom_text <- function(...) {
 # English
 en <- function(x){
   number_format(accuracy = decimal_acc(x),
-               scale = 1,
-               big.mark = ",",
-               decimal.mark = ".")(x)
+                scale = 1,
+               {{big.mark = ","}}
+               {{decimal.mark = ".")(x)}}
 }
 ```
 ]
@@ -327,9 +330,35 @@ en <- function(x){
 fi <- function(x){
   number_format(accuracy = decimal_acc(x),
                 scale = 1,
-                big.mark = " ",
-                decimal.mark = ",")(x)
+               {{big.mark = " ",}}
+               {{decimal.mark = ",")(x)}}
 }
+```
+
+]
+---
+# Different numbering systems
+
+.pull-left[
+<img src="figs/number-formatting_8.png" style="width:70%">
+]
+.pull-right[
+
+### Function supplied to labels argument using `match.fun()`
+
+```{r eval = FALSE}
+{{for (LANG in LANGUAGES) {}}
+  
+  ...
+  
+   ggplot(data, 
+        aes(x = year, 
+            y = gdp)) +
+    scale_y_continuous(
+       labels = match.fun(LANG)
+      )
+}
+
 ```
 
 ]
@@ -351,9 +380,9 @@ for (LANG in LANGUAGES) {
    ggplot(data, 
         aes(x = year, 
             y = gdp)) +
-    scale_y_continuous(
-      labels = match.fun(LANG)
-      )
+   {{scale_y_continuous(}}
+      {{labels = match.fun(LANG)}}
+     {{)}}
 }
 
 ```
@@ -382,13 +411,6 @@ background-size: cover
 Image credit: [Unsplash](https://unsplash.com/photos/qAHdDVN0gMQ)
 
 ---
-background-image: url("figs/tools_2.png")
-background-size: cover
-
-???
-
-Image credit: [Unsplash](https://unsplash.com/photos/qAHdDVN0gMQ)
----
 background-image: url("figs/globe.jpg")
 background-size: cover
 class: center, middle
@@ -402,8 +424,8 @@ background-size: cover
 class: center
 
 # .white[Thank you!]
-### .white[@mbeckett_za]
-### .white[megan@exegetic.biz]
+### `r fa("twitter", fill = "white")` .white[@mbeckett_za]
+### `r fa("envelope", fill = "white")` .white[megan@exegetic.biz]
 
 ---
 # Custom key glyphs 
