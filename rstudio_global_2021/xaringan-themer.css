@@ -123,7 +123,7 @@ a, a > code {
 .inverse {
   background-color: var(--inverse-background-color);
   color: var(--inverse-text-color);
-  
+
 }
 .inverse h1, .inverse h2, .inverse h3 {
   color: var(--inverse-header-color);
@@ -139,8 +139,8 @@ a, a > code {
 }
 /* Two-column layout */
 .left-column {
-  width: 20%;
-  height: 92%;
+  width: 30%;
+  height: 100%;
   float: left;
 }
 .left-column h2, .left-column h3 {
@@ -150,7 +150,7 @@ a, a > code {
   color: #424242;
 }
 .right-column {
-  width: 75%;
+  width: 65%;
   float: right;
   padding-top: 1em;
 }

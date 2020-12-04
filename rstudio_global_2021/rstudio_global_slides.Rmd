@@ -15,17 +15,8 @@ background-image: url("figs/lecture.jpg")
 background-size: cover
 
 ```{r xaringan-themer, include=FALSE}
-library(xaringanthemer)
+# library(xaringanthemer)
 library(fontawesome)
-
-style_duo_accent(
-  primary_color = "#424242",        # blue
-  secondary_color = "#fe7642",      # orange
-  header_font_google = google_font("Asap Medium"),
-  text_font_google = google_font("Asap"),
-  header_h1_font_size = "2.5rem",
-  header_h2_font_size = "2rem"
-)
 ```
 
 ```{r setup, include=FALSE}
@@ -75,7 +66,7 @@ Image credit: [Unsplash](https://unsplash.com/photos/WZh1QZFB4kc)
 background-image: url("figs/globe_circle.png")
 background-size: cover
 
-# .white[title title title title title]
+# .white[_Aesthetically automated figure production_]
 ## .white[Megan Beckett]
 ### .white[Data Scientist]
 
@@ -121,28 +112,28 @@ class: center, middle
 ---
 # 80% there with ggplot theme
 .left-column[
-<img src="figs/stylesheet.jpg" style="box-shadow: 10px 10px 5px grey; width:100%">
+<img src="figs/stylesheet.jpg" style="box-shadow: 10px 10px 5px grey; width:90%">
 ]
 --
 .right-column[
 ```{r eval=FALSE}
 theme_core <- function(...) {
-    theme_classic(
-      base_family = "Asap"
-    ) +
-    theme(
-      # Text 
-      axis.title = element_text(size = 20, family = "Asap Medium"),
-      # Line colours
-      axis.ticks = element_line(colour = "#464646"),
-      # Area colours
-      legend.background = element_rect(fill = alpha('white', 0.0)),
-      # Spacing and markdown
-      axis.title = ggtext::element_markdown(margin = margin(15))
-    ) +
-    theme(
-      ...
-    )
+  theme_classic(
+    base_family = "Asap"
+  ) +
+  theme(
+    # Text 
+    axis.title = element_text(size = 20, family = "Asap Med"),
+    # Line colours
+    axis.ticks = element_line(colour = "#464646"),
+    # Area colours
+    legend.background = element_rect(fill = alpha('white', 0)),
+    # Spacing and markdown
+    axis.title = ggtext::element_markdown(margin = margin(15))
+  ) +
+  theme(
+    ...
+  )
 }
 ```
 
@@ -156,6 +147,10 @@ theme_core <- function(...) {
 
 ---
 <center><img src="figs/comparison_2.png" style="width:100%"></center>
+### Spot the differences! See any? Tweet me *@mbeckett_za* 
+
+---
+<center><img src="figs/comparison_2a.png" style="width:100%"></center>
 ### Spot the differences! See any? Tweet me *@mbeckett_za* 
 
 ---
@@ -214,8 +209,8 @@ strings <- read_yaml("file_name.yml")
 ```{r eval = FALSE}
 ggplot(data, aes(x = year, y = temp)) +
   geom_line() +
-  {{labs(x = X_AXIS_LABEL,}}
-       {{y = Y_AXIS_LABEL)}}
+ {{labs(x = X_AXIS_LABEL,}}
+      {{y = Y_AXIS_LABEL)}}
 ```
 ]
 
@@ -302,10 +297,10 @@ geom_text <- function(...) {
 ---
 # Different numbering systems
 
-.pull-left[
-<img src="figs/number-formatting_5.png" style="width:70%">
+.left-column[
+<img src="figs/number-formatting_5.png" style="width:100%">
 ]
-.pull-right[
+.right-column[
 
 ### A number formatting function per language
 ```{r eval=FALSE}
@@ -321,10 +316,10 @@ en <- function(x){
 ---
 # Different numbering systems
 
-.pull-left[
-<img src="figs/number-formatting_6.png" style="width:70%">
+.left-column[
+<img src="figs/number-formatting_6.png" style="width:100%">
 ]
-.pull-right[
+.right-column[
 
 ### A number formatting function per language
 
@@ -342,10 +337,106 @@ fi <- function(x){
 ---
 # Different numbering systems
 
-.pull-left[
-<img src="figs/number-formatting_8.png" style="width:70%">
+.left-column[
+<img src="figs/number-formatting_9.png" style="width:100%">
 ]
-.pull-right[
+.right-column[
+
+```{r eval=FALSE}
+# Spanish
+es <- function(x){
+  dec_acc <- decimal_accuracy(x)
+  nums <- c()
+
+ {{for (i in 1:length(x)) {}}
+    if (x[i] > 9999) {
+      num <- number_format(accuracy = dec_acc,
+                          scale = 1,
+                          big.mark = " ",
+                          decimal.mark = ",")(x[i])
+    } else {
+      num <- number_format(accuracy = dec_acc,
+                           scale = 1,
+                           big.mark = "",
+                           decimal.mark = ",")(x[i])}
+    nums <- c(nums, num)
+  }
+  nums
+}
+```
+
+]
+---
+# Different numbering systems
+
+.left-column[
+<img src="figs/number-formatting_9.png" style="width:100%">
+]
+.right-column[
+
+```{r eval=FALSE}
+# Spanish
+es <- function(x){
+  dec_acc <- decimal_accuracy(x)
+  nums <- c()
+
+  for (i in 1:length(x)) {
+   {{if (x[i] > 9999) {}}
+      num <- number_format(accuracy = dec_acc,
+                          scale = 1,
+                          big.mark = " ",
+                          decimal.mark = ",")(x[i])
+    } else {
+      num <- number_format(accuracy = dec_acc,
+                           scale = 1,
+                           big.mark = "",
+                           decimal.mark = ",")(x[i])}
+    nums <- c(nums, num)
+  }
+  nums
+}
+```
+
+]
+---
+# Different numbering systems
+
+.left-column[
+<img src="figs/number-formatting_9.png" style="width:100%">
+]
+.right-column[
+
+```{r eval=FALSE}
+# Spanish
+es <- function(x){
+  dec_acc <- decimal_accuracy(x)
+  nums <- c()
+
+  for (i in 1:length(x)) {
+    if (x[i] > 9999) {
+      num <- number_format(accuracy = dec_acc,
+                          scale = 1,
+                         {{big.mark = " ",}}
+                          decimal.mark = ",")(x[i])
+    } else {
+      num <- number_format(accuracy = dec_acc,
+                           scale = 1,
+                          {{big.mark = "",}}
+                           decimal.mark = ",")(x[i])}
+    nums <- c(nums, num)
+  }
+  nums
+}
+```
+
+]
+---
+# Different numbering systems
+
+.left-column[
+<img src="figs/number-formatting_8.png" style="width:100%">
+]
+.right-column[
 
 ### Function supplied to labels argument using `match.fun()`
 
@@ -354,12 +445,9 @@ fi <- function(x){
   
   ...
   
-   ggplot(data, 
-        aes(x = year, 
-            y = gdp)) +
-    scale_y_continuous(
-       labels = match.fun(LANG)
-      )
+  ggplot(data, 
+         aes(x = year, y = gdp)) +
+    scale_y_continuous(labels = match.fun(LANG))
 }
 
 ```
@@ -368,10 +456,10 @@ fi <- function(x){
 ---
 # Different numbering systems
 
-.pull-left[
-<img src="figs/number-formatting_8.png" style="width:70%">
+.left-column[
+<img src="figs/number-formatting_8.png" style="width:100%">
 ]
-.pull-right[
+.right-column[
 
 ### Function supplied to labels argument using `match.fun()`
 
@@ -380,12 +468,9 @@ for (LANG in LANGUAGES) {
   
   ...
   
-   ggplot(data, 
-        aes(x = year, 
-            y = gdp)) +
-   {{scale_y_continuous(}}
-      {{labels = match.fun(LANG)}}
-     {{)}}
+  ggplot(data, 
+         aes(x = year, y = gdp)) +
+   {{scale_y_continuous(labels = match.fun(LANG))}}
 }
 
 ```
