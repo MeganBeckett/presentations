@@ -158,6 +158,10 @@ theme_core <- function(...) {
 ### Spot the differences! See any? Tweet me *@mbeckett_za* 
 
 ---
+<center><img src="figs/comparison_4.png" style="width:100%"></center>
+### Spot the differences! See any? Tweet me *@mbeckett_za* 
+
+---
 background-image: url("figs/graphs_faded.png")
 background-size: cover
 class: center, middle
@@ -306,9 +310,28 @@ geom_text <- function(...) {
 ```{r eval=FALSE}
 # English
 en <- function(x){
+ {{number_format(accuracy = decimal_acc(x),}}
+                scale = 1,
+                big.mark = ",",
+                decimal.mark = ".")(x)
+}
+```
+]
+---
+# Different numbering systems
+
+.left-column[
+<img src="figs/number-formatting_5.png" style="width:100%">
+]
+.right-column[
+
+### A number formatting function per language
+```{r eval=FALSE}
+# English
+en <- function(x){
   number_format(accuracy = decimal_acc(x),
                 scale = 1,
-               {{big.mark = ","}}
+               {{big.mark = ",",}}
                {{decimal.mark = ".")(x)}}
 }
 ```
